@@ -1,0 +1,99 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: arial, helvetica;
+    font-size: 15px;
+}
+
+h1, h2, h3 {
+    margin: 0px;
+}
+
+a {
+    color: blue;
+    cursor: pointer;
+}
+
+input {
+    font-size: 100%;
+}
+
+input[type="button"] {
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    background-color: silver;
+}
+
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid silver;
+}
+
+.container {
+    height: 100%;
+}
+
+.header {
+    background-color: rgb(222, 222, 222);
+    padding: 5px;
+}
+
+.content {
+    width: 77%;
+    float: left;
+    height: 80%;
+    padding: 5px;
+}
+
+.pres-list {
+    float:left;
+    border-right: 1px solid silver;
+    width: 20%;
+    min-width: 200px;
+    list-style-type: none;
+    padding: 5px;
+    margin: 0px;
+    height: 80%;
+}
+
+.field-block {
+    margin-bottom: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+input.delete {
+    background-color: red;
+    color: white;
+}
+
+.loading {
+
+}
+
+#c {
+    display: none;
+}
+
+.slide-container {
+    overflow: auto;
+}
+
+.slide-form {
+    float:left;
+    width: 22%;
+}
+
+.timeline-container {
+    float:left;
+    width: 76%;
+}
+
+.tl-img {
+    margin: 5px;
+}
