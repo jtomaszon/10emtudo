@@ -5,6 +5,7 @@ html, body {
 body {
     font-family: arial, helvetica;
     font-size: 15px;
+    margin: 0px;
 }
 
 h1, h2, h3 {
@@ -42,7 +43,7 @@ input[type="text"] {
 }
 
 .content {
-    width: 77%;
+    width: 83%;
     float: left;
     height: 80%;
     padding: 5px;
@@ -51,7 +52,7 @@ input[type="text"] {
 .pres-list {
     float:left;
     border-right: 1px solid silver;
-    width: 20%;
+    width: 15%;
     min-width: 200px;
     list-style-type: none;
     padding: 5px;
@@ -95,5 +96,24 @@ input.delete {
 }
 
 .tl-img {
+}
+
+.tl-img-container {
+    float: left;
+    height: 65px;
+    overflow: hidden;
     margin: 5px;
+    border: 2px solid gray;
+}
+
+.tl-time {
+    float: left;
+    width: 8px;
+    margin-right: 2px;
+    background-color: silver;
+}
+
+.tl-time:hover {
+    cursor: pointer;
+    background-color: navy;
 }

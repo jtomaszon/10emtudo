@@ -108,10 +108,10 @@
             if(zon(rawURL + 'complete').size()) {
                 zon(rawURL).each(function(index, id, data) {
                     for(var i=0; i < data.length; i++) {
-                        var x = $("<img class='tl-img'>");
-                        x.attr('src', data[i]);
-                        $('.timeline').append(x);
+                        $('.timeline').append( getCard(data[i], i+1) );
                     }
+                    //gambiarra temporaria
+                    tlCards = [];
                 });
                 $('.loading').addClass('hidden');
             } else {
@@ -142,15 +142,17 @@
                             $('.loading').html(perc + ' %');
 
                             if(b >= total) {
-                                //v.removeClass('hidden');
-                                $('.loading').addClass('hidden');
-                                buildTimeline();
+                                $('.loading').html('Loading timeline. Please, wait...');
+
+                                setTimeout(function() {
+                                    buildTimeline();
+                                }, 300);
+
                                 videoLoaded = true;
                             }
                         }
                     });
                 });
-
             }
         });
     }
@@ -164,6 +166,16 @@
             content.empty();
             listPresentations();
         }
+    }
+
+    function getCard(imgData, cardIndex) {
+        var x = $("<div class='tl-img-container' data-card-index='" + cardIndex + "'><div><img class='tl-img' src='" + imgData + "'></div></div>");
+
+        for(var i=0; i < 10; i++) {
+            x.append("<div class='tl-time' data-t='" + (i+1) + "'>&nbsp;</div>");
+        }
+
+        return x;
     }
 
     var tlCards = [], cardsId;
@@ -187,16 +199,8 @@
             v.currentTime = nextPos;
 
             ctx.drawImage(v, 0, 0, 100, 50);
-            var img = new Image();
-            img.src = c.toDataURL();
-
-            //checa se nao eh preto (chrome bg)
-            if('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAyCAYAAACqNX6+AAAAyElEQVR4Xu3TsQkAMAzEQHv/oZMUGULFGdwLid+ZOe9dxMAKEinxMQRp9RhBBIkZiOFYiCAxAzEcCxEkZiCGYyGCxAzEcCxEkJiBGI6FCBIzEMOxEEFiBmI4FiJIzEAMx0IEiRmI4ViIIDEDMRwLESRmIIZjIYLEDMRwLESQmIEYjoUIEjMQw7EQQWIGYjgWIkjMQAzHQgSJGYjhWIggMQMxHAsRJGYghmMhgsQMxHAsRJCYgRiOhQgSMxDDsRBBYgZiOBYSC3IBJx0yAX14GF4AAAAASUVORK5CYII=' != img.src) {
-                var x = $("<img class='tl-img'>");
-                x.attr('src', c.toDataURL());
-                tlCards.push(c.toDataURL());
-                $('.timeline').append(x);
-            }
+            tlCards.push(c.toDataURL());
+            $('.timeline').append( getCard(c.toDataURL(), nextPos/timelineGap) );
 
             nextPos += timelineGap;
             setTimeout(function() {
@@ -206,6 +210,7 @@
             cardsId = zon(rawURL).add(tlCards);
             zon(rawURL + 'complete').add(true);
             tlCards = [];
+            $('.loading').html('').addClass('hidden');
         }
     }
 
@@ -229,7 +234,6 @@
     $(document).on('click', '.btn-delete-pres', function(ev) {
         deletePres(this, ev);
     });
-
 
     window.dez = {
         newSlide: newSlide,

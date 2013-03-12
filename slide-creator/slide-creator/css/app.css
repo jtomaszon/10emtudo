@@ -1,0 +1,83 @@
+@import url(bootstrap.min.css);
+@import url(grids.css);
+
+*{
+  -webkit-box-sizing: border-box;
+}
+
+.margin-top-20{
+  margin-top: 20px;
+}
+
+ul{
+  padding-left: 0;
+  list-style-type: none;
+}
+
+body{
+  background: #eee;
+  font-family: Helvetica;
+}
+
+.cl:after{
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.template-container{
+  border: 4px solid #ccc;
+  cursor: pointer;
+  float: left;
+  width: 200px;
+  -webkit-transition: all linear 200ms;
+}
+.template-container:hover{
+  opacity: .8;
+  box-shadow: 0 8px 12px rgba(0,0,0,.5);
+}
+
+.template-info{
+  background: #ddd;
+  text-align: center;
+  padding: 4px;
+}
+
+.form-slide-creator{
+  background: #fefefe;
+  padding: 20px;
+}
+
+.form-slide-creator .bullets-itens{
+  margin: 8px 0 12px 0;
+}
+.form-slide-creator .bullets-itens:first-child{
+  margin-top: 0;
+}
+
+.form-slide-creator label{
+  display: inline-block;
+  font-weight: 700;
+}
+.form-slide-creator label[for=slide-title]{
+  margin-bottom: 8px;
+}
+
+.form-slide-creator input{
+  display: inline-block;
+  font-size: 1.2em;
+  padding: 4px;
+  width: 100%;
+}
+
+.form-controls{
+  background: rgb(240,240,240);
+  padding: 12px;
+}
+
+.template-type-title{
+  background: #fefefe;
+  border-bottom: 2px solid #bada55;
+  margin: 0;
+  padding: 20px 0 20px 24px;
+}
