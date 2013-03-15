@@ -83,9 +83,17 @@ input.delete {
 
 .slide-container {
     overflow: auto;
+
 }
 
-.slide-form {
+.slide-list {
+    float:left;
+    width: 22%;
+    height: 235px;
+    border: 1px dotted silver;
+}
+
+.slide-list {
     float:left;
     width: 22%;
 }
@@ -93,6 +101,9 @@ input.delete {
 .timeline-container {
     float:left;
     width: 76%;
+    height: 235px;
+    overflow-y: scroll;
+    border: 1px dotted silver;
 }
 
 .tl-img {
@@ -116,4 +127,13 @@ input.delete {
 .tl-time:hover {
     cursor: pointer;
     background-color: navy;
+}
+
+.slides {
+    list-style-type: none;
+    padding: 5px;
+}
+
+.slide-form {
+    visibility: hidden;
 }

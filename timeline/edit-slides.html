@@ -1,8 +1,18 @@
 <h2 class="pres-name"></h2>
 
 <div class="slide-container">
+    <div class="slide-list">
+        <ul class="slides"></ul>
+    </div>
+
+    <div class="timeline-container">
+        <canvas id="c" width="100" height="50"></canvas>
+        <div class="loading">Loading video...</div>
+        <div class="timeline"></div>
+        <video class="video-pres hidden" type='video/webm; codecs="vp8.0, vorbis"' controls preload="auto"></video>        
+    </div>
+
     <div class="slide-form">
-        <input type="hidden" id="slide-pres-id" value=""/>
         <div class="field-block">
             <div class="label">Title</div>
             <div class="field"><input type="text" id="slide-title"/></div>
@@ -12,12 +22,6 @@
             <div class="label">Bullets</div>
             <div class="field"><input type="text" id="slide-bullets"/></div>
         </div>
-        <!--
-        <div class="field-block">
-            <div class="label">Image</div>
-            <div class="field"><input type="text" id="slide-image"/></div>
-        </div>
-        -->
 
         <div class="field-block">
             <div class="label">Video initial time</div>
@@ -31,15 +35,9 @@
 
         <div class="field-block">
             <div class="field">
-                <input type="button" value="Save" class="btn-save-slide"/>
+                <input type="button" value="Save slide" class="btn-save-slide"/>
             </div>
         </div>
-    </div>
 
-    <div class="timeline-container">
-        <canvas id="c" width="100" height="50"></canvas>
-        <div class="loading">Loading video...</div>
-        <div class="timeline"></div>
-        <video class="video-pres hidden" type='video/webm; codecs="vp8.0, vorbis"' controls preload="auto"></video>        
     </div>
 </div>

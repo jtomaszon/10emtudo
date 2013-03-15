@@ -1,5 +1,5 @@
 ; (function(window, document, $, undefined) {
-    var timelineGap = 10, c, ctx;
+    var timelineGap = 10, c, ctx, slides, currentPresentation, currentSlide;
 
     $.ajaxSetup({
         cache: false
@@ -34,9 +34,10 @@
         return p;
     }
 
-    function newSlide() {
+    function newSlide(presId) {
         var s = Object.create(slide);
         s.title = 'New title';
+        $('.slide-form').css('visibility', 'visible');
     }
 
     function listPresentations() {
@@ -46,6 +47,46 @@
             buffer += "<li><a data-id='" + id + "' class='lnk-edit-pres'>" + (obj.name || 'unnamed presentation') + "</a></li>";
         });
         presList.html(buffer);
+    }
+
+    function listSlides(presId) {
+        slides = zon(pns).get(presId).slides;
+        var slideBuffer = "<li><a class='lnk-new-slide' data-pres-id='" + presId + "'>New slide</a></li>";
+
+        for(var i = 0; i < slides.length; i++) {
+            slideBuffer += "<li><a class='lnk-edit-slide' data-id='" + i + "'>" + slides[i].title + "</a></li>";
+        }
+
+        $('.slides').html(slideBuffer);
+    }
+
+    function saveSlide() {
+        var title = $('#slide-title').val() || 'new slide',
+            bullets = $('#slide-bullets').val(),
+            vstart = $('#slide-video-start').val(),
+            vend = $('#slide-video-end').val(),
+            slide = {
+                title: title,
+                bullets: bullets,
+                videoStart: vstart,
+                videoEnd: vend
+            };
+
+        slides.push(slide);
+
+        //retrieve presentation
+        var p = zon(pns).get(currentPresentation);
+        p.slides = slides;
+        zon(pns).update(currentPresentation, p);
+
+        //clean form and upate slide list
+        $('#slide-title').val('');
+        $('#slide-bullets').val('');
+        $('#slide-video-start').val('');
+        $('#slide-video-end').val('');
+        $('.slide-form').css('visibility', 'hidden');
+
+        listSlides(currentPresentation);
     }
 
     function savePres() {
@@ -66,6 +107,7 @@
 
         pres.name = name;
         pres.videoUrl = videoUrl;
+        pres.slides = [];
         zon(pns).add(pres, id);
 
         listPresentations();
@@ -93,15 +135,33 @@
         });
     }
 
+    function editSlide(slideIndex) {
+        var p = zon(pns).get(currentPresentation),
+            slide = p.slides[slideIndex];
+
+        $('.slide-form').css('visibility', 'visible');
+        $('#slide-title').val(slide.title);
+        $('#slide-bullets').val(slide.bullets);
+        $('#slide-video-start').val(slide.videoStart);
+        $('#slide-video-end').val(slide.videoEnd);
+        currentSlide = slideIndex;
+    }
+
     function editSlides(el, ev) {
         var id = $(el).data('pres-id'),
             pres = zon(pns).get(id);
+
+        currentPresentation = id
 
         $.ajax({
             url: 'edit-slides.html'
         }).done(function(data) {
             var videoLoaded = false;
             content.html(data);
+
+            $('#pres-id').val(id);
+
+            listSlides(id);
 
             var rawURL = location.href + 'videos/' + pres.videoUrl;
 
@@ -234,6 +294,23 @@
     $(document).on('click', '.btn-delete-pres', function(ev) {
         deletePres(this, ev);
     });
+
+    $(document).on('click', '.lnk-new-slide', function(ev) {
+        var presId = $(this).data('pres-id');
+        newSlide(presId);
+    });
+
+    $(document).on('click', '.btn-save-slide', function(ev) {
+        saveSlide();
+    });
+
+    $(document).on('click', '.lnk-edit-slide', function(ev) {
+        var slideIndex = $(this).data('id');
+        editSlide(slideIndex);
+    });
+
+
+
 
     window.dez = {
         newSlide: newSlide,
