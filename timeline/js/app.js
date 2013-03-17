@@ -36,6 +36,12 @@
 
     function newSlide(presId) {
         var s = Object.create(slide);
+        resetSlideForm();
+
+        $('.btn-save-slide').removeClass('hidden');
+        $('.btn-update-slide').addClass('hidden');
+
+
         s.title = 'New title';
         $('.slide-form').css('visibility', 'visible');
     }
@@ -80,10 +86,7 @@
         zon(pns).update(currentPresentation, p);
 
         //clean form and upate slide list
-        $('#slide-title').val('');
-        $('#slide-bullets').val('');
-        $('#slide-video-start').val('');
-        $('#slide-video-end').val('');
+        resetSlideForm();
         $('.slide-form').css('visibility', 'hidden');
 
         listSlides(currentPresentation);
@@ -107,7 +110,11 @@
 
         pres.name = name;
         pres.videoUrl = videoUrl;
-        pres.slides = [];
+
+        if(!pres.slides) {
+            pres.slides = [];
+        }
+        
         zon(pns).add(pres, id);
 
         listPresentations();
@@ -139,6 +146,9 @@
         var p = zon(pns).get(currentPresentation),
             slide = p.slides[slideIndex];
 
+        $('.btn-save-slide').addClass('hidden');
+        $('.btn-update-slide').removeClass('hidden');
+
         $('.slide-form').css('visibility', 'visible');
         $('#slide-title').val(slide.title);
         $('#slide-bullets').val(slide.bullets);
@@ -146,6 +156,37 @@
         $('#slide-video-end').val(slide.videoEnd);
         currentSlide = slideIndex;
     }
+
+    function updateSlide() {
+
+        var title = $('#slide-title').val() || 'new slide',
+            bullets = $('#slide-bullets').val(),
+            vstart = $('#slide-video-start').val(),
+            vend = $('#slide-video-end').val(),
+            slide = {
+                title: title,
+                bullets: bullets,
+                videoStart: vstart,
+                videoEnd: vend
+            };
+
+
+        var p = zon(pns).get(currentPresentation);
+        p.slides[currentSlide] = slide;
+
+        zon(pns).update(currentPresentation, p);
+
+        resetSlideForm();
+        listSlides(currentPresentation);
+    }
+
+    function resetSlideForm() {
+        $('#slide-title').val('');
+        $('#slide-bullets').val('');
+        $('#slide-video-start').val('');
+        $('#slide-video-end').val('');
+    }
+
 
     function editSlides(el, ev) {
         var id = $(el).data('pres-id'),
@@ -307,6 +348,10 @@
     $(document).on('click', '.lnk-edit-slide', function(ev) {
         var slideIndex = $(this).data('id');
         editSlide(slideIndex);
+    });
+
+    $(document).on('click', '.btn-update-slide', function(ev) {
+        updateSlide();
     });
 
 
