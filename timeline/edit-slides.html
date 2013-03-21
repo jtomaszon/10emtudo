@@ -9,7 +9,7 @@
         <canvas id="c" width="100" height="50"></canvas>
         <div class="loading">Loading video...</div>
         <div class="timeline"></div>
-        <video class="video-pres hidden" type='video/webm; codecs="vp8.0, vorbis"' controls preload="auto"></video>        
+        
     </div>
 
     <div class="slide-form">
@@ -25,12 +25,12 @@
 
         <div class="field-block">
             <div class="label">Video initial time</div>
-            <div class="field"><input type="text" id="slide-video-start"/></div>
+            <div class="field"><input type="text" class="txttime" id="slide-video-start"/></div>
         </div>
 
         <div class="field-block">
             <div class="label">Video ending time</div>
-            <div class="field"><input type="text" id="slide-video-end"/></div>
+            <div class="field"><input type="text" class="txttime" id="slide-video-end"/></div>
         </div>
 
         <div class="field-block">
@@ -39,6 +39,10 @@
                 <input type="button" value="Update slide" class="btn-update-slide hidden"/>
             </div>
         </div>
-
     </div>
+
+    <div class="video-sample">
+        <video class="video-pres" id="video" type='video/webm; codecs="vp8.0, vorbis"' autobuffer preload="auto" controls></video>
+    </div>
+
 </div>

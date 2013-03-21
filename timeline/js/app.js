@@ -1,5 +1,5 @@
 ; (function(window, document, $, undefined) {
-    var timelineGap = 10, c, ctx, slides, currentPresentation, currentSlide;
+    var timelineGap = 10, c, ctx, slides, currentPresentation, currentSlide, currTextTime;
 
     $.ajaxSetup({
         cache: false
@@ -56,7 +56,7 @@
     }
 
     function listSlides(presId) {
-        slides = zon(pns).get(presId).slides;
+        slides = zon(pns).get(presId).slides || [];
         var slideBuffer = "<li><a class='lnk-new-slide' data-pres-id='" + presId + "'>New slide</a></li>";
 
         for(var i = 0; i < slides.length; i++) {
@@ -158,7 +158,6 @@
     }
 
     function updateSlide() {
-
         var title = $('#slide-title').val() || 'new slide',
             bullets = $('#slide-bullets').val(),
             vstart = $('#slide-video-start').val(),
@@ -170,13 +169,13 @@
                 videoEnd: vend
             };
 
-
         var p = zon(pns).get(currentPresentation);
         p.slides[currentSlide] = slide;
 
         zon(pns).update(currentPresentation, p);
 
         resetSlideForm();
+        currTextTime = null;
         listSlides(currentPresentation);
     }
 
@@ -187,25 +186,35 @@
         $('#slide-video-end').val('');
     }
 
+    function loadVideo(v, pres) {
+        //var v = $('.video-pres');
+        v[0].volume = 0;
+        v[0].type = 'video/webm; codecs="vp8.0, vorbis"';
+        v[0].src = 'videos/' + pres.videoUrl;// + '?rnd=' + Math.random();
+        Popcorn('#video').preload('auto');
+    }
 
     function editSlides(el, ev) {
         var id = $(el).data('pres-id'),
             pres = zon(pns).get(id);
 
-        currentPresentation = id
+        currentPresentation = id;
 
         $.ajax({
             url: 'edit-slides.html'
         }).done(function(data) {
-            var videoLoaded = false;
             content.html(data);
 
             $('#pres-id').val(id);
+            $('.pres-name').html(pres.name);
 
             listSlides(id);
 
             var rawURL = location.href + 'videos/' + pres.videoUrl;
+            var v = $('.video-pres');
 
+            //se este video ja teve a timeline bufferizada, usa-a
+            //senao, faz o download do video para criar timeline
             if(zon(rawURL + 'complete').size()) {
                 zon(rawURL).each(function(index, id, data) {
                     for(var i=0; i < data.length; i++) {
@@ -214,21 +223,18 @@
                     //gambiarra temporaria
                     tlCards = [];
                 });
+
                 $('.loading').addClass('hidden');
+                loadVideo(v, pres);
             } else {
                 c = $('#c')[0];
                 ctx = c.getContext('2d');
 
-                $('.pres-name').html(pres.name);
-                var v = $('.video-pres');
-                v[0].volume = 0;
-                v[0].type = 'video/webm; codecs="vp8.0, vorbis"';
-                v[0].src = 'videos/' + pres.videoUrl + '?rnd=' + Math.random();
+                loadVideo(v, pres);
 
-                //garante que algum pedaço do video ha carregou
+                //garante que algum pedaço do video ja carregou
                 //entao posso começar a contar o download
                 v[0].addEventListener('loadedmetadata', function() {
-
                     v[0].play();
                     setTimeout(function() {
                         v[0].pause();
@@ -315,6 +321,22 @@
         }
     }
 
+    function moveVideoTime(el) {
+
+        var $el = $(el),
+            cardIndex = $el.parent().data('card-index'),
+            t = $el.data('t'),
+            total = (cardIndex * 10) - 10,
+            v = Popcorn('#video');
+
+        v.currentTime(total + t);
+
+        if(currTextTime) {
+            currTextTime.value = total+t;
+        }
+
+    }
+
     //bindings
     $(document).on('click', '.lnk-new-pres', function(ev) {
         content.load('pres-form.html');
@@ -354,7 +376,17 @@
         updateSlide();
     });
 
+    $(document).on('click', '.tl-time', function(ev) {
+        moveVideoTime(this);
+    });
 
+    $(document).on('click', '.txttime', function(ev) {
+        currTextTime = this;
+    });
+
+    $(document).on('keydown', '.txttime', function(ev) {
+        ev.preventDefault();
+    });
 
 
     window.dez = {

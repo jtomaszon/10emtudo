@@ -135,5 +135,10 @@ input.delete {
 }
 
 .slide-form {
+    float: left;
     visibility: hidden;
+}
+
+.txttime {
+    width: 50px;
 }
