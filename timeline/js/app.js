@@ -1,32 +1,38 @@
 ; (function(window, document, $, undefined) {
-    var timelineGap = 10, c, ctx, slides, currentPresentation, currentSlide, currTextTime;
+    var timelineGap = 10,
+        c,
+        ctx, 
+        slides, 
+        currentPresentation, 
+        currentSlide, 
+        currTextTime,
+
+        //cached selectors
+        presList = $('.pres-list'),
+        content = $('.content'),
+
+        //zon namespace
+        pns = 'presentations',
+        
+        //row scheme
+        slide = {
+            title: null,
+            bullets: null,
+            image: null,
+            videoStart: 0,
+            videoEnd: 0
+        }
+
+        presentation = {
+            id: null,
+            name: null,
+            slides: [],
+            videoUrl: null
+        };
 
     $.ajaxSetup({
         cache: false
     });
-
-    //cached selectors
-    var presList = $('.pres-list'),
-        content = $('.content');
-
-    //zon namespace
-    var pns = 'presentations';
-    
-    //row scheme
-    var slide = {
-        title: null,
-        bullets: null,
-        image: null,
-        videoStart: 0,
-        videoEnd: 0
-    };
-
-    var presentation = {
-        id: null,
-        name: null,
-        slides: [],
-        videoUrl: null
-    };
 
     function newPres() {
         var p =  Object.create(presentation);
@@ -227,6 +233,7 @@
                 $('.loading').addClass('hidden');
                 loadVideo(v, pres);
             } else {
+                var videoLoaded = false;
                 c = $('#c')[0];
                 ctx = c.getContext('2d');
 
@@ -294,7 +301,8 @@
             v = $('.video-pres')[0];
         }
 
-        var rawURL = v.src.substr(0, v.src.indexOf('?'));
+        //var rawURL = v.src.substr(0, v.src.indexOf('?'));
+        var rawURL = v.src;
 
         if(!nextPos) {
             nextPos = timelineGap;
@@ -335,6 +343,14 @@
             currTextTime.value = total+t;
         }
 
+    }
+
+    function previewPres() {
+        window.open('preview.html', '__blank');
+    }
+
+    function publishPres() {
+        alert('Comming soon');
     }
 
     //bindings
@@ -388,6 +404,13 @@
         ev.preventDefault();
     });
 
+    $(document).on('click', '.lnk-publish', function(ev) {
+        publisPres();
+    });
+
+    $(document).on('click', '.lnk-preview', function(ev) {
+        previewPres();
+    });
 
     window.dez = {
         newSlide: newSlide,

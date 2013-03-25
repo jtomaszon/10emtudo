@@ -6,6 +6,7 @@ body {
     font-family: arial, helvetica;
     font-size: 15px;
     margin: 0px;
+    background-color: rgb(242, 242, 242);
 }
 
 h1, h2, h3 {
@@ -141,4 +142,14 @@ input.delete {
 
 .txttime {
     width: 50px;
+}
+
+.video-sample {
+    float:left;
+}
+
+.reveal {
+    float:left;
+    width: 400px;
+    border: 1px solid red;
 }

@@ -1,0 +1,37 @@
+body {
+    background: rgb(190, 190, 190);
+    margin-top: 30px;
+}
+
+.container {
+    padding: 10px;
+    margin-top: 50px;
+    width: 800px;
+    background-color: rgb(180, 180, 180);
+    overflow: hidden;
+    height: 250px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 3px;
+    moz-border-radius: 3px;
+    webkit-border-radius: 3px;
+    box-shadow: 0px 0px 17px rgba(0, 0, 0, 0);
+}
+
+.video-container {
+    float:left; 
+    width:50%; 
+}
+
+.reveal {
+    float:left;
+    width: 50%;
+}
+
+#the-video {
+    width: 100%;
+}
+
+#cell1, #cell2 {
+    display: none;
+}

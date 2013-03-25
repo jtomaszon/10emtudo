@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="css/estilo.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="video-container">
+				<video id="the-video" autoplay>
+					<source src="fuu.webm"></source>
+					<source src="fuu.ogg"></source>
+				</video>				
+			</div>
+			<!--
+			<img src="cell1.jpg" id="cell1"/>
+			<img src="cell2.jpg" id="cell2"/>
+			-->
+
+			<div class="reveal">
+
+				<!-- Any section element inside of this container is displayed as a slide -->
+				<div class="slides">
+
+					<section data-markdown>
+						<script type="text/template">
+							#Videos interativos
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							#Popcorn.JS
+							###Projeto open source Mozilla
+							
+							* Utiliza Video API
+							* Permite manipular a página
+							* Permite manipular o video
+							* Integração com outras APIs
+							* Possibildades ilimitadas
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							#Vantagens
+
+							* Demonstração detalhada de produto
+							* Aulas interativas
+							* Navegar por trechos do video
+							* Usuário escolhe o que quer ver
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							#Exemplos
+							##Detalhes do produto
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							![](cell1.jpg)
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							![](cell2.jpg)
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							##Saiba mais sobre o <a href="http://www.samsung.com/galaxyace/ace_overview.html" target="_blank">Galaxy Ace</a>
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							#Exemplos
+							##Controle da página
+						</script>
+					</section>
+
+					<section data-markdown>
+							<!--
+							* <a href="#" id="lnk-frente">Fique de frente</a>
+							* <a href="#" id="lnk-costas">Fique de costas</a>
+							* <a href="#" id="lnk-sair-tela">Saia da tela</a>
+							-->						
+						<script type="text/template">
+							#Exemplos
+
+							* <a href="#" id="lnk-continue">Continuar o video</a>
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							#Conclusão
+							
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							#Obrigado!
+							
+						</script>
+					</section>
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+		<script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: false,
+				history: false,
+				center: false,
+				keyboard: false,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+			//actions
+			function nav(x) {
+				Reveal.navigateTo(x);
+			}
+
+			function normal() {
+				$('body').css('background-color', 'rgb(190, 190, 190)');
+			}
+
+			function escuro() {
+				$('body').css('background-color', 'rgb(90, 90, 90)');
+			}
+
+			function claro() {
+				$('body').css('background-color', 'rgb(255, 255, 255)');
+			}
+
+			function rosa() {
+				$('body').css('background-color', 'pink');
+			}
+
+			function zoom() {
+				$('.container').width('100%');
+				$('.container').height('400px');
+			}
+
+			function deFrente() {
+				p.currentTime(190);
+				p.play();
+			}
+
+			function deCostas() {
+				p.currentTime(195);
+				p.play();
+			}
+
+
+			function sairDaTela() {
+				p.currentTime(206);
+				p.play();
+			}
+
+			function continuarVideo() {
+				p.currentTime(212);
+				setTimeout(function() {
+					p.play();
+					nav(9);
+				}, 100);
+				
+			}
+
+			function stop() {
+				p.pause();
+			}
+
+			function add(s, e, os, oe) {
+				p.code({
+					start: s,
+					end: e,
+					onStart: os,
+					onEnd: oe
+				});
+			}
+
+			//popcorn conf
+			var p = Popcorn('#the-video');
+
+			//events
+			$("body").on('click', '#lnk-frente', function() {
+				deFrente();
+			});
+
+			$("body").on('click', '#lnk-costas', function() {
+				deCostas();
+			});
+
+			$("body").on('click', '#lnk-sair-tela', function() {
+				sairDaTela();
+			});
+
+			$("body").on('click', '#lnk-continue', function() {
+				continuarVideo();
+			});
+
+
+			add(25, 53, function() {
+				nav(1);
+			}, function(){
+				nav(2);
+			});
+
+			add(120, 132, function(){nav(3)}, function(){nav(4)});
+			add(135, 151, function(){nav(5)}, function(){nav(6)});
+			add(159, 162, function(){nav(7)}, function(){});
+			add(162, 163, escuro, claro);
+			add(165, 168, rosa, normal);
+			add(172, 187, zoom, function() {
+				p.pause();
+				nav(8);
+			});
+
+			add(246, 500, function(){nav(10);}, function(){});
+			add(194, 500, stop, function(){});
+			add(211, 500, stop, function(){});
+			add(202, 500, stop, function(){});
+
+		</script>
+
+	</body>
+</html>
