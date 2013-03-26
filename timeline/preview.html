@@ -27,12 +27,12 @@
 <div class="container">
     <div class="reveal">
         <div class="slides">
-            <section data-markdown>
-                <script type="text/template">
-                    #Videos interativos
-                </script>
-            </section>
+            <section data-markdown></section>
         </div>
+    </div>
+
+    <div class="video-container">
+        <video class="the-video" type='video/webm; codecs="vp8.0, vorbis"' autobuffer preload="auto" controls></video>
     </div>
 </div>
 
@@ -67,6 +67,9 @@ Reveal.initialize({
         // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
     ]
 });
+
+var presId = dez.queryString('presId');
+dez.feedReveal(presId);
 </script>
 </body>
 </html>

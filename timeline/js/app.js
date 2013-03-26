@@ -34,6 +34,32 @@
         cache: false
     });
 
+    function queryString(key) {
+        var re = new RegExp(key + "=(\\w+)"),
+            result = location.href.match(re);
+
+        if(result) {
+            return result[1];
+        }
+        return null;
+    }
+
+    function feedReveal(presId) {
+        var tpl = "<section data-markdown><script type=\"text/template\">#TITLE</script></section>",
+            pres = zon(pns).get(presId),
+            videoSrc = 'videos/' + pres.videoUrl + '?rnd=' + Math.random(),
+            slides = pres.slides,
+            buffer = "";
+
+        for(var i=0; i < slides.length; i++) {
+            buffer += tpl.replace(/TITLE/, slides[i].title);
+        }
+
+        $('.slides').html(buffer);
+        $('.the-video')[0].src = videoSrc;
+
+    }
+
     function newPres() {
         var p =  Object.create(presentation);
         p.name = 'New presentation';
@@ -346,7 +372,8 @@
     }
 
     function previewPres() {
-        window.open('preview.html', '__blank');
+        var url = 'preview.html?presId=' + currentPresentation;
+        window.open(url, '__blank');
     }
 
     function publishPres() {
@@ -405,7 +432,7 @@
     });
 
     $(document).on('click', '.lnk-publish', function(ev) {
-        publisPres();
+        publishPres();
     });
 
     $(document).on('click', '.lnk-preview', function(ev) {
@@ -417,6 +444,8 @@
         newPres: newPres,
         listPresentations: listPresentations,
         savePres: savePres,
-        buildTimeline: buildTimeline
+        buildTimeline: buildTimeline,
+        queryString: queryString,
+        feedReveal: feedReveal
     };
 })(window, document, jQuery);
