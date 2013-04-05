@@ -6,6 +6,7 @@
         currentPresentation, 
         currentSlide, 
         currTextTime,
+        previewVideo,
 
         //cached selectors
         presList = $('.pres-list'),
@@ -44,10 +45,10 @@
         return null;
     }
 
-    function feedReveal(presId) {
+    function feedReveal(presId, Reveal) {
         var tpl = "<section data-markdown><script type=\"text/template\">#TITLE</script></section>",
             pres = zon(pns).get(presId),
-            videoSrc = 'videos/' + pres.videoUrl + '?rnd=' + Math.random(),
+            videoSrc = 'videos/' + pres.videoUrl; // + '?rnd=' + Math.random(),
             slides = pres.slides,
             buffer = "";
 
@@ -57,7 +58,56 @@
 
         $('.slides').html(buffer);
         $('.the-video')[0].src = videoSrc;
+        previewVideo = Popcorn('.the-video');
+        window.lero = previewVideo;
 
+        //carrega todos os tempos em que o video deve parar de tocar
+        slides.forEach(function(data, i) {
+            previewVideo.code({
+                end: data.videoEnd,
+                onEnd: function() {
+                    previewVideo.pause();
+                }
+            });
+        });
+
+        //roda o video do slide 1
+        setVideoTime(previewVideo, +slides[0].videoStart);
+
+        Reveal.addEventListener('slidechanged', function(event) {
+            // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+            var slide = slides[event.indexh];
+            setVideoTime(previewVideo, +slide.videoStart);
+        });
+
+        function setVideoTime(v, t) {
+            if(v.duration()) {
+              v.currentTime(t);
+
+            setTimeout(function() {
+                v.play();
+            }, 100);
+
+            } else {
+              v.on('loadedmetadata', function() {
+                v.currentTime(t);
+                setTimeout(function() {
+                    v.play();
+                }, 100);
+
+              });
+            }
+        }
+
+        function lala() {
+            previewVideo.pause();
+            //previewVideo.currentTime(slides[0].videoStart);
+            //previewVideo.play();
+
+            $('.the-video')[0].removeEventListener('canplay', lala);
+        }
+
+        //$('.the-video')[0].addEventListener('canplay', lala);
     }
 
     function newPres() {

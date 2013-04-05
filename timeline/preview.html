@@ -37,7 +37,7 @@
 </div>
 
 <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/popcorn.min.js"></script>
+<script type="text/javascript" src="js/popcorn-complete.min.js"></script>
 <script type="text/javascript" src="js/zon.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
 <script src="lib/js/head.min.js"></script>
@@ -68,8 +68,9 @@ Reveal.initialize({
     ]
 });
 
+
 var presId = dez.queryString('presId');
-dez.feedReveal(presId);
+dez.feedReveal(presId, Reveal);
 </script>
 </body>
 </html>
